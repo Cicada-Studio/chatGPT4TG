@@ -7,6 +7,9 @@ import json
 from datetime import datetime
 import openai
 
+from keep_alive import keep_alive
+keep_alive()  # 讓 Render 認為這是一個 Web 應用
+
 import telegram
 from telegram import (
     Update,
