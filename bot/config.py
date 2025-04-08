@@ -1,8 +1,14 @@
+import os
 import yaml
 import dotenv
 from pathlib import Path
 
 config_dir = Path(__file__).parent.parent.resolve() / "config"
+
+# load ENV
+telegram_token: os.environ.get("TELEGRAM_BOT_TOKEN")
+openai_api_key: os.environ.get("OPENAI_API_KEY")
+allowed_telegram_usernames: os.environ.get("AUTHORIZED_USER_IDS")
 
 # load yaml config
 with open(config_dir / "config.yml", 'r') as f:
