@@ -22,7 +22,19 @@ config_env = dotenv.dotenv_values(config_dir / "config.env")
 telegram_token = config_yaml["telegram_token"]
 openai_api_key = config_yaml["openai_api_key"]
 openai_api_base = config_yaml.get("openai_api_base", None)
-allowed_telegram_usernames = config_yaml["allowed_telegram_usernames"]
+
+#allowed_telegram_usernames = config_yaml["allowed_telegram_usernames"]
+raw_allowed = config_yaml.get("allowed_telegram_usernames", "")
+
+if isinstance(raw_allowed, int):
+    allowed_telegram_usernames = [raw_allowed]
+elif isinstance(raw_allowed, str):
+    allowed_telegram_usernames = [u.strip() for u in raw_allowed.split(",") if u.strip()]
+elif isinstance(raw_allowed, list):
+    allowed_telegram_usernames = raw_allowed
+else:
+    allowed_telegram_usernames = []
+    
 new_dialog_timeout = config_yaml["new_dialog_timeout"]
 enable_message_streaming = config_yaml.get("enable_message_streaming", True)
 return_n_generated_images = config_yaml.get("return_n_generated_images", 1)
