@@ -2,17 +2,18 @@ import os
 import yaml
 import dotenv
 from pathlib import Path
+from string import Template
 
 config_dir = Path(__file__).parent.parent.resolve() / "config"
 
-# load ENV
-telegram_token: os.environ.get("TELEGRAM_BOT_TOKEN")
-openai_api_key: os.environ.get("OPENAI_API_KEY")
-allowed_telegram_usernames: os.environ.get("AUTHORIZED_USER_IDS")
-
-# load yaml config
-with open(config_dir / "config.yml", 'r') as f:
-    config_yaml = yaml.safe_load(f)
+# Step 1: 讀取原始 config.yml（純文字）
+with open(config_dir / "config.yml", 'r', encoding='utf-8') as f:
+    raw_config = f.read()
+# Step 2: 替換 ${...} 為對應的環境變數（os.environ）
+template = Template(raw_config)
+rendered_config = template.safe_substitute(os.environ)
+# Step 3: 解析為 dict
+config_yaml = yaml.safe_load(rendered_config)
 
 # load .env config
 config_env = dotenv.dotenv_values(config_dir / "config.env")
