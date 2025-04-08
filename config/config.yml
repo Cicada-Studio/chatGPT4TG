@@ -1,3 +1,7 @@
+telegram_token: ${TELEGRAM_BOT_TOKEN}
+openai_api_key: ${OPENAI_API_KEY}
+allowed_telegram_usernames: ${AUTHORIZED_USER_IDS}
+
 openai_api_base: null  # leave null to use default api base or you can put your own base url here
 new_dialog_timeout: 600  # new dialog starts after timeout (in seconds)
 return_n_generated_images: 1
